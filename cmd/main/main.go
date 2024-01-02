@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"os"
 	"speed-typing-text-service/internal/adapters/handler"
@@ -43,6 +44,9 @@ func initRoutes() {
 
 	log.Info("initializing error handling middleware")
 	r.Use(handler.ErrorHandlerMiddleware())
+
+	log.Info("initializing cors middleware")
+	r.Use(cors.Default())
 
 	log.Info("initializing handlers")
 
