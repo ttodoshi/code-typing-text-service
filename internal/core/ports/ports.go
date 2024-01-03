@@ -8,14 +8,14 @@ import (
 type CodeExampleService interface {
 	GetProgrammingLanguages() ([]dto.GetProgrammingLanguageDto, error)
 	GetCodeExamples() ([]dto.GetCodeExampleDto, error)
-	GetCodeExamplesByProgrammingLanguageUUID(programmingLanguageUUID string) ([]dto.GetCodeExampleDto, error)
+	GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) ([]dto.GetCodeExampleDto, error)
 }
 
 //go:generate go run github.com/vektra/mockery/v2@v2.39.1 --name=CodeExampleRepository
 type CodeExampleRepository interface {
 	GetProgrammingLanguages() []domain.ProgrammingLanguage
 	GetCodeExamples() []domain.CodeExample
-	GetCodeExamplesByProgrammingLanguageUUID(programmingLanguageUUID string) ([]domain.CodeExample, error)
+	GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) ([]domain.CodeExample, error)
 }
 
 type RegularTextService interface {

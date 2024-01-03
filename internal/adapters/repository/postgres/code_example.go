@@ -27,13 +27,13 @@ func (r *codeExampleRepository) GetCodeExamples() (codeExamples []domain.CodeExa
 	return
 }
 
-func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageUUID(programmingLanguageUUID string) (codeExamples []domain.CodeExample, err error) {
+func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) (codeExamples []domain.CodeExample, err error) {
 	var programmingLanguage domain.ProgrammingLanguage
-	r.DB.First(&programmingLanguage, "uuid = ?", programmingLanguageUUID)
+	r.DB.First(&programmingLanguage, "name = ?", programmingLanguageName)
 
 	if programmingLanguage.UUID == "" {
 		return codeExamples, &errors.NotFoundError{
-			Message: fmt.Sprintf(`programming programmingLanguage by uuid '%s' not found`, programmingLanguageUUID),
+			Message: fmt.Sprintf(`programming language '%s' not found`, programmingLanguageName),
 		}
 	}
 

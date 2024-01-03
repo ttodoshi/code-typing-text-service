@@ -33,21 +33,21 @@ func (_m *CodeExampleRepository) GetCodeExamples() []domain.CodeExample {
 	return r0
 }
 
-// GetCodeExamplesByProgrammingLanguageUUID provides a mock function with given fields: programmingLanguageUUID
-func (_m *CodeExampleRepository) GetCodeExamplesByProgrammingLanguageUUID(programmingLanguageUUID string) ([]domain.CodeExample, error) {
-	ret := _m.Called(programmingLanguageUUID)
+// GetCodeExamplesByProgrammingLanguageName provides a mock function with given fields: programmingLanguageName
+func (_m *CodeExampleRepository) GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) ([]domain.CodeExample, error) {
+	ret := _m.Called(programmingLanguageName)
 
 	if len(ret) == 0 {
-		panic("no return value specified for GetCodeExamplesByProgrammingLanguageUUID")
+		panic("no return value specified for GetCodeExamplesByProgrammingLanguageName")
 	}
 
 	var r0 []domain.CodeExample
 	var r1 error
 	if rf, ok := ret.Get(0).(func(string) ([]domain.CodeExample, error)); ok {
-		return rf(programmingLanguageUUID)
+		return rf(programmingLanguageName)
 	}
 	if rf, ok := ret.Get(0).(func(string) []domain.CodeExample); ok {
-		r0 = rf(programmingLanguageUUID)
+		r0 = rf(programmingLanguageName)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]domain.CodeExample)
@@ -55,7 +55,7 @@ func (_m *CodeExampleRepository) GetCodeExamplesByProgrammingLanguageUUID(progra
 	}
 
 	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(programmingLanguageUUID)
+		r1 = rf(programmingLanguageName)
 	} else {
 		r1 = ret.Error(1)
 	}

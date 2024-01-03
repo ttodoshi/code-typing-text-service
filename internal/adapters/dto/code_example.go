@@ -3,6 +3,7 @@ package dto
 type GetProgrammingLanguageDto struct {
 	UUID string `json:"UUID"`
 	Name string `json:"name"`
+	Logo string `json:"logo"`
 }
 
 type GetCodeExampleDto struct {

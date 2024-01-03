@@ -7,15 +7,18 @@ import (
 	"os"
 	"path"
 	"runtime"
+	"sync"
 )
 
 var e *logrus.Entry
+var once sync.Once
 
 func GetLogger() Logger {
+	once.Do(Init)
 	return e
 }
 
-func init() {
+func Init() {
 	l := logrus.New()
 	l.SetReportCaller(true)
 	l.Formatter = &logrus.TextFormatter{

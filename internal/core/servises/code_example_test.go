@@ -96,7 +96,7 @@ func TestGetCodeExamples(t *testing.T) {
 	repo.AssertExpectations(t)
 }
 
-func TestGetCodeExamplesByProgrammingLanguageUUID(t *testing.T) {
+func TestGetCodeExamplesByProgrammingLanguageName(t *testing.T) {
 	var log = discard.GetLogger()
 	// repo mock
 	repo := new(mocks.CodeExampleRepository)
@@ -122,29 +122,29 @@ func TestGetCodeExamplesByProgrammingLanguageUUID(t *testing.T) {
 	}
 	for programmingLanguage, codeExamples := range programmingLanguages {
 		repo.
-			On("GetCodeExamplesByProgrammingLanguageUUID", programmingLanguage.UUID).
+			On("GetCodeExamplesByProgrammingLanguageName", programmingLanguage.Name).
 			Return(codeExamples, nil)
 	}
 	repo.
 		On(
-			"GetCodeExamplesByProgrammingLanguageUUID",
+			"GetCodeExamplesByProgrammingLanguageName",
 			mock.AnythingOfType("string"),
 		).Return(
-		nil, // []domain.CodeExample{}
+		nil,
 		&errors.NotFoundError{},
 	)
 
 	// service
 	service := NewCodeExampleService(repo, log)
 
-	t.Run("successful retrieval by UUID", func(t *testing.T) {
+	t.Run("successful retrieval by programming language name", func(t *testing.T) {
 		for programmingLanguage, expectedCodeExamples := range programmingLanguages {
 			// expected
 			var expectedResult []dto.GetCodeExampleDto
 			err := copier.Copy(&expectedResult, &expectedCodeExamples)
 			require.NoError(t, err)
 			// actual
-			actualResult, err := service.GetCodeExamplesByProgrammingLanguageUUID(programmingLanguage.UUID)
+			actualResult, err := service.GetCodeExamplesByProgrammingLanguageName(programmingLanguage.Name)
 
 			// checks
 			assert.NoError(t, err)
@@ -153,8 +153,8 @@ func TestGetCodeExamplesByProgrammingLanguageUUID(t *testing.T) {
 		repo.AssertExpectations(t)
 	})
 
-	t.Run("unsuccessful retrieval with non-existent UUID", func(t *testing.T) {
-		_, err := service.GetCodeExamplesByProgrammingLanguageUUID(gofakeit.UUID())
+	t.Run("unsuccessful retrieval with non-existent programming language name", func(t *testing.T) {
+		_, err := service.GetCodeExamplesByProgrammingLanguageName(gofakeit.LoremIpsumWord())
 
 		// checks
 		assert.Error(t, err)

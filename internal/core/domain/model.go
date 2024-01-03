@@ -29,7 +29,8 @@ func (e *CodeExample) BeforeCreate(_ *gorm.DB) (err error) {
 
 type ProgrammingLanguage struct {
 	UUID string `gorm:"primaryKey"`
-	Name string `gorm:"not null"`
+	Name string `gorm:"unique;not null"`
+	Logo string `gorm:"unique;not null"`
 }
 
 func (l *ProgrammingLanguage) BeforeCreate(_ *gorm.DB) (err error) {
