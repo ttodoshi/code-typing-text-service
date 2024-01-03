@@ -11,6 +11,10 @@ import (
 
 var e *logrus.Entry
 
+func GetLogger() Logger {
+	return e
+}
+
 func init() {
 	l := logrus.New()
 	l.SetReportCaller(true)

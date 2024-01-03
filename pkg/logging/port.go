@@ -8,10 +8,6 @@ const (
 	Error = "error"
 )
 
-func GetLogger() Logger {
-	return e
-}
-
 type Logger interface {
 	Print(args ...interface{})
 	Printf(format string, args ...interface{})

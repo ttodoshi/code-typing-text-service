@@ -42,7 +42,7 @@ func (s *CodeExampleService) GetCodeExamples() (getCodeExamplesDto []dto.GetCode
 func (s *CodeExampleService) GetCodeExamplesByProgrammingLanguageUUID(programmingLanguageUUID string) (getCodeExamplesDto []dto.GetCodeExampleDto, err error) {
 	codeExamples, err := s.repo.GetCodeExamplesByProgrammingLanguageUUID(programmingLanguageUUID)
 	if err != nil {
-		s.log.Infof(`error getting code codeExamples by language name: '%s' due to error: %v`, programmingLanguageUUID, err)
+		s.log.Infof(`error getting code code examples by programming language uuid: '%s' due to error: %v`, programmingLanguageUUID, err)
 		return getCodeExamplesDto, err
 	}
 
