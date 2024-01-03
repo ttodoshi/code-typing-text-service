@@ -31,7 +31,7 @@ func (h *CodeExampleHandler) GetProgrammingLanguages(c *gin.Context) {
 }
 
 func (h *CodeExampleHandler) GetCodeExamples(c *gin.Context) {
-	programmingLanguageUUID := c.Query("programmingLanguageUUID")
+	programmingLanguageUUID := c.Query("programming-language-uuid")
 
 	var examples []dto.GetCodeExampleDto
 	var err error

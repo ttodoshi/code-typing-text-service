@@ -66,7 +66,7 @@ func initRoutes() {
 		v1ProgrammingLanguagesGroup.GET("/", codeExampleHandler.GetProgrammingLanguages)
 	}
 
-	v1CodeExamplesGroup := v1ApiGroup.Group("/codes")
+	v1CodeExamplesGroup := v1ApiGroup.Group("/code-examples")
 	{
 		v1CodeExamplesGroup.GET("/", codeExampleHandler.GetCodeExamples)
 	}
