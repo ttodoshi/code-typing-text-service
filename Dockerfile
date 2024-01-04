@@ -11,10 +11,12 @@ RUN go mod tidy
 
 RUN go build -o ./bin/app ./cmd/main/main.go
 
-FROM alpine:latest
+FROM alpine:latest AS final
 
 WORKDIR /usr/local/src/app
 
-COPY --from=0 /usr/local/src/app/bin/app .
+COPY --from=builder /usr/local/src/app/bin/app .
+
+EXPOSE 8080
 
 CMD ["./app"]
