@@ -91,7 +91,7 @@ func initConsul() {
 	}
 
 	service := &api.AgentServiceRegistration{
-		Name:    "text-service",
+		Name:    os.Getenv("CONSUL_SERVICE_NAME"),
 		Port:    parsedPort,
 		Address: os.Getenv("CONSUL_SERVICE_ADDRESS"),
 	}
