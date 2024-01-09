@@ -13,6 +13,34 @@ type CodeExampleRepository struct {
 	mock.Mock
 }
 
+// GetCodeExampleByUUID provides a mock function with given fields: _a0
+func (_m *CodeExampleRepository) GetCodeExampleByUUID(_a0 string) (domain.CodeExample, error) {
+	ret := _m.Called(_a0)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetCodeExampleByUUID")
+	}
+
+	var r0 domain.CodeExample
+	var r1 error
+	if rf, ok := ret.Get(0).(func(string) (domain.CodeExample, error)); ok {
+		return rf(_a0)
+	}
+	if rf, ok := ret.Get(0).(func(string) domain.CodeExample); ok {
+		r0 = rf(_a0)
+	} else {
+		r0 = ret.Get(0).(domain.CodeExample)
+	}
+
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetCodeExamples provides a mock function with given fields:
 func (_m *CodeExampleRepository) GetCodeExamples() []domain.CodeExample {
 	ret := _m.Called()

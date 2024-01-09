@@ -48,6 +48,66 @@ func TestGetProgrammingLanguages(t *testing.T) {
 	repo.AssertExpectations(t)
 }
 
+func TestGetCodeExampleByUUID(t *testing.T) {
+	var log = discard.GetLogger()
+	// repo mock
+	repo := new(mocks.CodeExampleRepository)
+	programmingLanguage := domain.ProgrammingLanguage{
+		UUID: gofakeit.UUID(),
+		Name: gofakeit.ProgrammingLanguage(),
+	}
+	expectedCodeExamples := map[string]domain.CodeExample{}
+	for i := 0; i < gofakeit.IntRange(1, 3); i++ {
+		uuid := gofakeit.UUID()
+		expectedCodeExamples[uuid] = domain.CodeExample{
+			UUID:                    uuid,
+			Content:                 gofakeit.LoremIpsumSentence(gofakeit.IntRange(1, 10)),
+			ProgrammingLanguageUUID: programmingLanguage.UUID,
+			ProgrammingLanguage:     programmingLanguage,
+		}
+	}
+	for uuid, codeExample := range expectedCodeExamples {
+		repo.
+			On("GetCodeExampleByUUID", uuid).
+			Return(codeExample, nil)
+	}
+	repo.
+		On(
+			"GetCodeExampleByUUID",
+			mock.AnythingOfType("string"),
+		).Return(
+		domain.CodeExample{},
+		&errors.NotFoundError{},
+	)
+
+	// service
+	service := NewCodeExampleService(repo, log)
+
+	t.Run("successful retrieval code example by UUID", func(t *testing.T) {
+		for uuid, codeExample := range expectedCodeExamples {
+			// expected
+			var expectedResult dto.GetCodeExampleDto
+			err := copier.Copy(&expectedResult, &codeExample)
+			require.NoError(t, err)
+			// actual
+			actualResult, err := service.GetCodeExampleByUUID(uuid)
+
+			// checks
+			assert.NoError(t, err)
+			assert.Equal(t, expectedResult, actualResult)
+		}
+		repo.AssertExpectations(t)
+	})
+
+	t.Run("unsuccessful retrieval code example by UUID", func(t *testing.T) {
+		_, err := service.GetCodeExampleByUUID(gofakeit.UUID())
+
+		// checks
+		assert.Error(t, err)
+		repo.AssertExpectations(t)
+	})
+}
+
 func TestGetCodeExamples(t *testing.T) {
 	var log = discard.GetLogger()
 	// repo mock

@@ -22,6 +22,16 @@ func (r *codeExampleRepository) GetProgrammingLanguages() (programmingLanguages 
 	return
 }
 
+func (r *codeExampleRepository) GetCodeExampleByUUID(UUID string) (codeExample domain.CodeExample, err error) {
+	r.DB.Find(&codeExample, "uuid = ?", UUID)
+	if codeExample.UUID == "" {
+		return codeExample, &errors.NotFoundError{
+			Message: fmt.Sprintf("code example by uuid '%s' not found", UUID),
+		}
+	}
+	return codeExample, nil
+}
+
 func (r *codeExampleRepository) GetCodeExamples() (codeExamples []domain.CodeExample) {
 	r.DB.Find(&codeExamples)
 	return

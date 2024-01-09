@@ -60,6 +60,7 @@ func initRoutes() {
 
 		codeExampleHandler := handler.NewCodeExampleHandler(codeExampleService, log)
 		v1TextsGroup.GET("/programming-languages", codeExampleHandler.GetProgrammingLanguages)
+		v1TextsGroup.GET("/code-examples/:uuid", codeExampleHandler.GetCodeExampleByUUID)
 		v1TextsGroup.GET("/code-examples", codeExampleHandler.GetCodeExamples)
 	}
 
