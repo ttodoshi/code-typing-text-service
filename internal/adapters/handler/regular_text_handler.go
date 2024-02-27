@@ -18,6 +18,15 @@ func NewRegularTextHandler(svc ports.RegularTextService, log logging.Logger) *Re
 	}
 }
 
+// GetRegularTexts godoc
+//
+//	@Summary		Get regular texts
+//	@Description	Get all regular texts
+//	@Tags			texts
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{array}	dto.GetRegularTextDto
+//	@Router			/texts [get]
 func (h *RegularTextHandler) GetRegularTexts(c *gin.Context) {
 	h.log.Debug("received get regular texts request")
 

@@ -19,6 +19,15 @@ func NewCodeExampleHandler(svc ports.CodeExampleService, log logging.Logger) *Co
 	}
 }
 
+// GetProgrammingLanguages godoc
+//
+//	@Summary		Get programming languages
+//	@Description	Get all programming languages
+//	@Tags			code examples
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{array}	dto.GetProgrammingLanguageDto
+//	@Router			/texts/programming-languages [get]
 func (h *CodeExampleHandler) GetProgrammingLanguages(c *gin.Context) {
 	h.log.Debug("received get programming languages request")
 
@@ -30,6 +39,17 @@ func (h *CodeExampleHandler) GetProgrammingLanguages(c *gin.Context) {
 	c.JSON(200, languages)
 }
 
+// GetCodeExampleByUUID godoc
+//
+//	@Summary		Get code example by UUID
+//	@Description	Get code example by UUID
+//	@Tags			code examples
+//	@Accept			json
+//	@Produce		json
+//	@Param			uuid	path		string	true	"Code example UUID"
+//	@Success		200		{object}	dto.GetCodeExampleDto
+//	@Failure		404		{object}	dto.ErrorResponseDto
+//	@Router			/texts/code-examples/{uuid} [get]
 func (h *CodeExampleHandler) GetCodeExampleByUUID(c *gin.Context) {
 	h.log.Debug("received get code example by UUID request")
 
@@ -43,6 +63,17 @@ func (h *CodeExampleHandler) GetCodeExampleByUUID(c *gin.Context) {
 	c.JSON(200, example)
 }
 
+// GetCodeExamples godoc
+//
+//	@Summary		Get code examples
+//	@Description	Get code examples by programming language name
+//	@Tags			code examples
+//	@Accept			json
+//	@Produce		json
+//	@Param			programming-language-name	query		string	false	"Programming language name"
+//	@Success		200							{array}		dto.GetCodeExampleDto
+//	@Failure		404							{object}	dto.ErrorResponseDto
+//	@Router			/texts/code-examples [get]
 func (h *CodeExampleHandler) GetCodeExamples(c *gin.Context) {
 	h.log.Debug("received get code examples request")
 

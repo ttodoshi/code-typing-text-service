@@ -3,17 +3,10 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"speed-typing-text-service/internal/adapters/dto"
 	"speed-typing-text-service/internal/core/errors"
 	"time"
 )
-
-type errorResponse struct {
-	Timestamp time.Time `json:"timestamp"`
-	Status    int       `json:"status,omitempty"`
-	Error     string    `json:"error,omitempty"`
-	Message   string    `json:"message,omitempty"`
-	Path      string    `json:"path,omitempty"`
-}
 
 func ErrorHandlerMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -30,7 +23,7 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 			default:
 				responseStatus = http.StatusInternalServerError
 			}
-			c.JSON(responseStatus, errorResponse{
+			c.JSON(responseStatus, dto.ErrorResponseDto{
 				Timestamp: time.Now(),
 				Status:    responseStatus,
 				Error:     http.StatusText(responseStatus),

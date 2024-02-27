@@ -1,0 +1,134 @@
+basePath: /api/v1
+definitions:
+  dto.ErrorResponseDto:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      path:
+        type: string
+      status:
+        type: integer
+      timestamp:
+        type: string
+    type: object
+  dto.GetCodeExampleDto:
+    properties:
+      UUID:
+        type: string
+      content:
+        type: string
+      programmingLanguageUUID:
+        type: string
+    type: object
+  dto.GetProgrammingLanguageDto:
+    properties:
+      UUID:
+        type: string
+      logo:
+        type: string
+      name:
+        type: string
+    type: object
+  dto.GetRegularTextDto:
+    properties:
+      UUID:
+        type: string
+      content:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+host: localhost:8080
+info:
+  contact: {}
+  title: Text Generation Service API
+  version: "1.0"
+paths:
+  /texts:
+    get:
+      consumes:
+      - application/json
+      description: Get all regular texts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.GetRegularTextDto'
+            type: array
+      summary: Get regular texts
+      tags:
+      - texts
+  /texts/code-examples:
+    get:
+      consumes:
+      - application/json
+      description: Get code examples by programming language name
+      parameters:
+      - description: Programming language name
+        in: query
+        name: programming-language-name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.GetCodeExampleDto'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDto'
+      summary: Get code examples
+      tags:
+      - code examples
+  /texts/code-examples/{uuid}:
+    get:
+      consumes:
+      - application/json
+      description: Get code example by UUID
+      parameters:
+      - description: Code example UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.GetCodeExampleDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDto'
+      summary: Get code example by UUID
+      tags:
+      - code examples
+  /texts/programming-languages:
+    get:
+      consumes:
+      - application/json
+      description: Get all programming languages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.GetProgrammingLanguageDto'
+            type: array
+      summary: Get programming languages
+      tags:
+      - code examples
+swagger: "2.0"
