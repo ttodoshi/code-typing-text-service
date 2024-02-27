@@ -26,43 +26,45 @@ func (s *CodeExampleService) GetProgrammingLanguages() (getProgrammingLanguagesD
 
 	err = copier.Copy(&getProgrammingLanguagesDto, &programmingLanguages)
 	if err != nil {
-		return getProgrammingLanguagesDto, &errors.MappingError{Message: `struct mapping error`}
+		err = &errors.MappingError{Message: `struct mapping error`}
 	}
-	return getProgrammingLanguagesDto, nil
+	return
 }
 
 func (s *CodeExampleService) GetCodeExampleByUUID(UUID string) (getCodeExampleDto dto.GetCodeExampleDto, err error) {
 	var codeExample domain.CodeExample
 	codeExample, err = s.repo.GetCodeExampleByUUID(UUID)
 	if err != nil {
-		return getCodeExampleDto, err
+		return
 	}
+
 	err = copier.Copy(&getCodeExampleDto, &codeExample)
 	if err != nil {
-		return getCodeExampleDto, &errors.MappingError{Message: `struct mapping error`}
+		err = &errors.MappingError{Message: `struct mapping error`}
 	}
-	return getCodeExampleDto, nil
+	return
 }
 
 func (s *CodeExampleService) GetCodeExamples() (getCodeExamplesDto []dto.GetCodeExampleDto, err error) {
 	codeExamples := s.repo.GetCodeExamples()
+
 	err = copier.Copy(&getCodeExamplesDto, &codeExamples)
 	if err != nil {
-		return getCodeExamplesDto, &errors.MappingError{Message: `struct mapping error`}
+		err = &errors.MappingError{Message: `struct mapping error`}
 	}
-	return getCodeExamplesDto, nil
+	return
 }
 
 func (s *CodeExampleService) GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) (getCodeExamplesDto []dto.GetCodeExampleDto, err error) {
 	codeExamples, err := s.repo.GetCodeExamplesByProgrammingLanguageName(programmingLanguageName)
 	if err != nil {
 		s.log.Infof(`error getting code examples by programming language '%s' due to error: %v`, programmingLanguageName, err)
-		return getCodeExamplesDto, err
+		return
 	}
 
 	err = copier.Copy(&getCodeExamplesDto, &codeExamples)
 	if err != nil {
-		return getCodeExamplesDto, &errors.MappingError{Message: `struct mapping error`}
+		err = &errors.MappingError{Message: `struct mapping error`}
 	}
-	return getCodeExamplesDto, nil
+	return
 }

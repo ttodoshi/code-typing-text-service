@@ -31,13 +31,11 @@ func (h *CodeExampleHandler) GetProgrammingLanguages(c *gin.Context) {
 }
 
 func (h *CodeExampleHandler) GetCodeExampleByUUID(c *gin.Context) {
+	h.log.Debug("received get code example by UUID request")
+
 	UUID := c.Param("uuid")
 
-	var example dto.GetCodeExampleDto
-	var err error
-
-	h.log.Debug("received get code example by UUID request")
-	example, err = h.svc.GetCodeExampleByUUID(UUID)
+	example, err := h.svc.GetCodeExampleByUUID(UUID)
 	if err != nil {
 		err = c.Error(err)
 		return
@@ -46,12 +44,13 @@ func (h *CodeExampleHandler) GetCodeExampleByUUID(c *gin.Context) {
 }
 
 func (h *CodeExampleHandler) GetCodeExamples(c *gin.Context) {
+	h.log.Debug("received get code examples request")
+
 	programmingLanguageName := c.Query("programming-language-name")
 
 	var examples []dto.GetCodeExampleDto
 	var err error
 
-	h.log.Debug("received get code examples request")
 	if programmingLanguageName == "" {
 		examples, err = h.svc.GetCodeExamples()
 	} else {

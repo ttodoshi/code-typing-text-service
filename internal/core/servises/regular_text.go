@@ -22,9 +22,10 @@ func NewRegularTextService(repo ports.RegularTextRepository, log logging.Logger)
 
 func (s *RegularTextService) GetRegularTexts() (getTextsDto []dto.GetRegularTextDto, err error) {
 	texts := s.repo.GetRegularTexts()
+
 	err = copier.Copy(&getTextsDto, &texts)
 	if err != nil {
-		return getTextsDto, &errors.MappingError{Message: `struct mapping error`}
+		err = &errors.MappingError{Message: `struct mapping error`}
 	}
-	return getTextsDto, nil
+	return
 }
