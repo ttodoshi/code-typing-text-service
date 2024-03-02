@@ -5,7 +5,6 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"os"
-	"speed-typing-text-service/internal/core/domain"
 	"sync"
 )
 
@@ -17,14 +16,9 @@ func ConnectToDb() *gorm.DB {
 		dbUrl := os.Getenv("DB_URL")
 
 		var err error
-
 		db, err = gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
 		if err != nil {
 			log.Fatal("failed to connect to database")
-		}
-		err = db.AutoMigrate(&domain.RegularText{}, &domain.ProgrammingLanguage{}, &domain.CodeExample{})
-		if err != nil {
-			log.Fatal("error while migrating")
 		}
 	})
 	return db

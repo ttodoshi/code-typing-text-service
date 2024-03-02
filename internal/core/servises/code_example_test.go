@@ -10,12 +10,12 @@ import (
 	"speed-typing-text-service/internal/core/domain"
 	"speed-typing-text-service/internal/core/errors"
 	"speed-typing-text-service/internal/core/ports/mocks"
-	"speed-typing-text-service/pkg/logging/discard"
+	"speed-typing-text-service/pkg/logging/nop"
 	"testing"
 )
 
 func TestGetProgrammingLanguages(t *testing.T) {
-	var log = discard.GetLogger()
+	var log = nop.GetLogger()
 	// repo mock
 	repo := new(mocks.CodeExampleRepository)
 	var expectedProgrammingLanguages []domain.ProgrammingLanguage
@@ -49,7 +49,7 @@ func TestGetProgrammingLanguages(t *testing.T) {
 }
 
 func TestGetCodeExampleByUUID(t *testing.T) {
-	var log = discard.GetLogger()
+	var log = nop.GetLogger()
 	// repo mock
 	repo := new(mocks.CodeExampleRepository)
 	programmingLanguage := domain.ProgrammingLanguage{
@@ -109,7 +109,7 @@ func TestGetCodeExampleByUUID(t *testing.T) {
 }
 
 func TestGetCodeExamples(t *testing.T) {
-	var log = discard.GetLogger()
+	var log = nop.GetLogger()
 	// repo mock
 	repo := new(mocks.CodeExampleRepository)
 	var programmingLanguages []domain.ProgrammingLanguage
@@ -157,7 +157,7 @@ func TestGetCodeExamples(t *testing.T) {
 }
 
 func TestGetCodeExamplesByProgrammingLanguageName(t *testing.T) {
-	var log = discard.GetLogger()
+	var log = nop.GetLogger()
 	// repo mock
 	repo := new(mocks.CodeExampleRepository)
 	programmingLanguages := map[domain.ProgrammingLanguage][]domain.CodeExample{}

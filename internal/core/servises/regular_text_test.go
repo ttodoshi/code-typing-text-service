@@ -8,12 +8,12 @@ import (
 	"speed-typing-text-service/internal/adapters/dto"
 	"speed-typing-text-service/internal/core/domain"
 	"speed-typing-text-service/internal/core/ports/mocks"
-	"speed-typing-text-service/pkg/logging/discard"
+	"speed-typing-text-service/pkg/logging/nop"
 	"testing"
 )
 
 func TestGetRegularTexts(t *testing.T) {
-	var log = discard.GetLogger()
+	var log = nop.GetLogger()
 	// repo mock
 	repo := new(mocks.RegularTextRepository)
 	var expectedTexts []domain.RegularText

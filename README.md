@@ -1,5 +1,7 @@
-# Speed Typing text service on Golang
+# Speed Typing
 
-speed typing text generation service written on golang with GORM and gin framework
+## Text Service on Golang
 
-swagger url: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+Text generation service written on Golang with GORM and Gin framework
+
+Swagger URL: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)

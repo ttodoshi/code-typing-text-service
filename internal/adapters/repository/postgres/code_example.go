@@ -3,6 +3,7 @@ package postgres
 import (
 	"fmt"
 	"gorm.io/gorm"
+	"log"
 	"speed-typing-text-service/internal/core/domain"
 	"speed-typing-text-service/internal/core/errors"
 	"speed-typing-text-service/internal/core/ports"
@@ -14,7 +15,12 @@ type codeExampleRepository struct {
 }
 
 func NewCodeExampleRepository() ports.CodeExampleRepository {
-	return &codeExampleRepository{DB: database.ConnectToDb()}
+	DB := database.ConnectToDb()
+	err := DB.AutoMigrate(&domain.ProgrammingLanguage{}, &domain.CodeExample{})
+	if err != nil {
+		log.Fatal("error while migrating")
+	}
+	return &codeExampleRepository{DB: DB}
 }
 
 func (r *codeExampleRepository) GetProgrammingLanguages() (programmingLanguages []domain.ProgrammingLanguage) {
