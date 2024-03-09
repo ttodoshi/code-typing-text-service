@@ -38,8 +38,6 @@ definitions:
       content:
         type: string
     type: object
-externalDocs:
-  description: OpenAPI
 host: localhost:8080
 info:
   contact: {}

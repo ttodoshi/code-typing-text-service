@@ -2,26 +2,27 @@ package postgres
 
 import (
 	"gorm.io/gorm"
-	"log"
 	"speed-typing-text-service/internal/core/domain"
 	"speed-typing-text-service/internal/core/ports"
 	"speed-typing-text-service/pkg/database"
+	"speed-typing-text-service/pkg/logging"
 )
 
 type regularTextRepository struct {
-	DB *gorm.DB
+	log logging.Logger
+	db  *gorm.DB
 }
 
-func NewRegularTextRepository() ports.RegularTextRepository {
-	DB := database.ConnectToDb()
-	err := DB.AutoMigrate(&domain.RegularText{})
+func NewRegularTextRepository(log logging.Logger) ports.RegularTextRepository {
+	db := database.ConnectToDb()
+	err := db.AutoMigrate(&domain.RegularText{})
 	if err != nil {
 		log.Fatal("error while migrating")
 	}
-	return &regularTextRepository{DB: DB}
+	return &regularTextRepository{db: db}
 }
 
 func (r *regularTextRepository) GetRegularTexts() (texts []domain.RegularText) {
-	r.DB.Find(&texts)
+	r.db.Find(&texts)
 	return
 }

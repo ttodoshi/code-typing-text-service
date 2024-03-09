@@ -3,33 +3,34 @@ package postgres
 import (
 	"fmt"
 	"gorm.io/gorm"
-	"log"
 	"speed-typing-text-service/internal/core/domain"
 	"speed-typing-text-service/internal/core/errors"
 	"speed-typing-text-service/internal/core/ports"
 	"speed-typing-text-service/pkg/database"
+	"speed-typing-text-service/pkg/logging"
 )
 
 type codeExampleRepository struct {
-	DB *gorm.DB
+	log logging.Logger
+	db  *gorm.DB
 }
 
-func NewCodeExampleRepository() ports.CodeExampleRepository {
-	DB := database.ConnectToDb()
-	err := DB.AutoMigrate(&domain.ProgrammingLanguage{}, &domain.CodeExample{})
+func NewCodeExampleRepository(log logging.Logger) ports.CodeExampleRepository {
+	db := database.ConnectToDb()
+	err := db.AutoMigrate(&domain.ProgrammingLanguage{}, &domain.CodeExample{})
 	if err != nil {
 		log.Fatal("error while migrating")
 	}
-	return &codeExampleRepository{DB: DB}
+	return &codeExampleRepository{db: db}
 }
 
 func (r *codeExampleRepository) GetProgrammingLanguages() (programmingLanguages []domain.ProgrammingLanguage) {
-	r.DB.Find(&programmingLanguages)
+	r.db.Find(&programmingLanguages)
 	return
 }
 
 func (r *codeExampleRepository) GetCodeExampleByUUID(UUID string) (codeExample domain.CodeExample, err error) {
-	r.DB.Find(&codeExample, "uuid = ?", UUID)
+	r.db.Find(&codeExample, "uuid = ?", UUID)
 	if codeExample.UUID == "" {
 		return codeExample, &errors.NotFoundError{
 			Message: fmt.Sprintf("code example by uuid '%s' not found", UUID),
@@ -39,13 +40,13 @@ func (r *codeExampleRepository) GetCodeExampleByUUID(UUID string) (codeExample d
 }
 
 func (r *codeExampleRepository) GetCodeExamples() (codeExamples []domain.CodeExample) {
-	r.DB.Find(&codeExamples)
+	r.db.Find(&codeExamples)
 	return
 }
 
 func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) (codeExamples []domain.CodeExample, err error) {
 	var programmingLanguage domain.ProgrammingLanguage
-	r.DB.First(&programmingLanguage, "name = ?", programmingLanguageName)
+	r.db.First(&programmingLanguage, "name = ?", programmingLanguageName)
 
 	if programmingLanguage.UUID == "" {
 		return codeExamples, &errors.NotFoundError{
@@ -53,6 +54,6 @@ func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageName(program
 		}
 	}
 
-	r.DB.Find(&codeExamples, "programming_language_uuid = ?", programmingLanguage.UUID)
+	r.db.Find(&codeExamples, "programming_language_uuid = ?", programmingLanguage.UUID)
 	return codeExamples, nil
 }

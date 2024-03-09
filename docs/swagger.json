@@ -199,8 +199,5 @@
                 }
             }
         }
-    },
-    "externalDocs": {
-        "description": "OpenAPI"
     }
 }
