@@ -25,6 +25,7 @@ func TestGetProgrammingLanguages(t *testing.T) {
 			domain.ProgrammingLanguage{
 				UUID: gofakeit.UUID(),
 				Name: gofakeit.ProgrammingLanguage(),
+				Logo: gofakeit.ImageURL(200, 200),
 			},
 		)
 	}
@@ -55,6 +56,7 @@ func TestGetCodeExampleByUUID(t *testing.T) {
 	programmingLanguage := domain.ProgrammingLanguage{
 		UUID: gofakeit.UUID(),
 		Name: gofakeit.ProgrammingLanguage(),
+		Logo: gofakeit.ImageURL(200, 200),
 	}
 	expectedCodeExamples := map[string]domain.CodeExample{}
 	for i := 0; i < gofakeit.IntRange(1, 3); i++ {
@@ -96,7 +98,6 @@ func TestGetCodeExampleByUUID(t *testing.T) {
 			assert.NoError(t, err)
 			assert.Equal(t, expectedResult, actualResult)
 		}
-		repo.AssertExpectations(t)
 	})
 
 	t.Run("unsuccessful retrieval code example by UUID", func(t *testing.T) {
@@ -104,8 +105,8 @@ func TestGetCodeExampleByUUID(t *testing.T) {
 
 		// checks
 		assert.Error(t, err)
-		repo.AssertExpectations(t)
 	})
+	repo.AssertExpectations(t)
 }
 
 func TestGetCodeExamples(t *testing.T) {
@@ -119,6 +120,7 @@ func TestGetCodeExamples(t *testing.T) {
 			domain.ProgrammingLanguage{
 				UUID: gofakeit.UUID(),
 				Name: gofakeit.ProgrammingLanguage(),
+				Logo: gofakeit.ImageURL(200, 200),
 			},
 		)
 	}
@@ -165,6 +167,7 @@ func TestGetCodeExamplesByProgrammingLanguageName(t *testing.T) {
 		programmingLanguages[domain.ProgrammingLanguage{
 			UUID: gofakeit.UUID(),
 			Name: gofakeit.ProgrammingLanguage(),
+			Logo: gofakeit.ImageURL(200, 200),
 		}] = []domain.CodeExample{}
 	}
 	for programmingLanguage := range programmingLanguages {
@@ -210,7 +213,6 @@ func TestGetCodeExamplesByProgrammingLanguageName(t *testing.T) {
 			assert.NoError(t, err)
 			assert.Equal(t, expectedResult, actualResult)
 		}
-		repo.AssertExpectations(t)
 	})
 
 	t.Run("unsuccessful retrieval with non-existent programming language name", func(t *testing.T) {
@@ -218,6 +220,6 @@ func TestGetCodeExamplesByProgrammingLanguageName(t *testing.T) {
 
 		// checks
 		assert.Error(t, err)
-		repo.AssertExpectations(t)
 	})
+	repo.AssertExpectations(t)
 }
