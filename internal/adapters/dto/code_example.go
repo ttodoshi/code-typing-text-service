@@ -11,3 +11,15 @@ type GetCodeExampleDto struct {
 	Content                 string `json:"content"`
 	ProgrammingLanguageUUID string `json:"programmingLanguageUUID"`
 }
+
+type GetCustomCodeExampleDto struct {
+	UUID                    string `json:"UUID"`
+	Content                 string `json:"content"`
+	ProgrammingLanguageUUID string `json:"programmingLanguageUUID"`
+	UserID                  string `json:"userID"`
+}
+
+type CreateCodeExampleDto struct {
+	Content                 string `json:"content"`
+	ProgrammingLanguageUUID string `json:"programmingLanguageUUID"`
+}

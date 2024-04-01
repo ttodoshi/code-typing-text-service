@@ -1,5 +1,12 @@
 basePath: /api/v1
 definitions:
+  dto.CreateCodeExampleDto:
+    properties:
+      content:
+        type: string
+      programmingLanguageUUID:
+        type: string
+    type: object
   dto.ErrorResponseDto:
     properties:
       error:
@@ -63,7 +70,54 @@ paths:
       summary: Get code examples
       tags:
       - code examples
+    post:
+      consumes:
+      - application/json
+      description: Create code example
+      parameters:
+      - description: create code example request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCodeExampleDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDto'
+      summary: Create code example
+      tags:
+      - code examples
   /texts/code-examples/{uuid}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete code example
+      parameters:
+      - description: Code example UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDto'
+      summary: Delete code example
+      tags:
+      - code examples
     get:
       consumes:
       - application/json

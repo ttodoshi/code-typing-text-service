@@ -1,15 +1,15 @@
 package main
 
 import (
+	_ "code-typing-text-service/docs"
+	"code-typing-text-service/internal/adapters/handler"
+	"code-typing-text-service/internal/adapters/repository/postgres"
+	"code-typing-text-service/internal/core/servises"
+	"code-typing-text-service/pkg/discovery"
+	"code-typing-text-service/pkg/env"
+	"code-typing-text-service/pkg/logging"
 	"github.com/gin-gonic/gin"
 	"os"
-	_ "speed-typing-text-service/docs"
-	"speed-typing-text-service/internal/adapters/handler"
-	"speed-typing-text-service/internal/adapters/repository/postgres"
-	"speed-typing-text-service/internal/core/servises"
-	"speed-typing-text-service/pkg/discovery"
-	"speed-typing-text-service/pkg/env"
-	"speed-typing-text-service/pkg/logging"
 )
 
 const (

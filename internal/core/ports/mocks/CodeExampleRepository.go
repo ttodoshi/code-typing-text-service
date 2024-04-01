@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	domain "speed-typing-text-service/internal/core/domain"
+	domain "code-typing-text-service/internal/core/domain"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -13,9 +13,27 @@ type CodeExampleRepository struct {
 	mock.Mock
 }
 
-// GetCodeExampleByUUID provides a mock function with given fields: _a0
-func (_m *CodeExampleRepository) GetCodeExampleByUUID(_a0 string) (domain.CodeExample, error) {
-	ret := _m.Called(_a0)
+// DeleteCodeExample provides a mock function with given fields: UUID
+func (_m *CodeExampleRepository) DeleteCodeExample(UUID string) error {
+	ret := _m.Called(UUID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteCodeExample")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(string) error); ok {
+		r0 = rf(UUID)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// GetCodeExampleByUUID provides a mock function with given fields: UUID
+func (_m *CodeExampleRepository) GetCodeExampleByUUID(UUID string) (domain.CodeExample, error) {
+	ret := _m.Called(UUID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetCodeExampleByUUID")
@@ -24,16 +42,16 @@ func (_m *CodeExampleRepository) GetCodeExampleByUUID(_a0 string) (domain.CodeEx
 	var r0 domain.CodeExample
 	var r1 error
 	if rf, ok := ret.Get(0).(func(string) (domain.CodeExample, error)); ok {
-		return rf(_a0)
+		return rf(UUID)
 	}
 	if rf, ok := ret.Get(0).(func(string) domain.CodeExample); ok {
-		r0 = rf(_a0)
+		r0 = rf(UUID)
 	} else {
 		r0 = ret.Get(0).(domain.CodeExample)
 	}
 
 	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(_a0)
+		r1 = rf(UUID)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -41,17 +59,17 @@ func (_m *CodeExampleRepository) GetCodeExampleByUUID(_a0 string) (domain.CodeEx
 	return r0, r1
 }
 
-// GetCodeExamples provides a mock function with given fields:
-func (_m *CodeExampleRepository) GetCodeExamples() []domain.CodeExample {
-	ret := _m.Called()
+// GetCodeExamples provides a mock function with given fields: userID
+func (_m *CodeExampleRepository) GetCodeExamples(userID string) []domain.CodeExample {
+	ret := _m.Called(userID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetCodeExamples")
 	}
 
 	var r0 []domain.CodeExample
-	if rf, ok := ret.Get(0).(func() []domain.CodeExample); ok {
-		r0 = rf()
+	if rf, ok := ret.Get(0).(func(string) []domain.CodeExample); ok {
+		r0 = rf(userID)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]domain.CodeExample)
@@ -61,9 +79,9 @@ func (_m *CodeExampleRepository) GetCodeExamples() []domain.CodeExample {
 	return r0
 }
 
-// GetCodeExamplesByProgrammingLanguageName provides a mock function with given fields: programmingLanguageName
-func (_m *CodeExampleRepository) GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) ([]domain.CodeExample, error) {
-	ret := _m.Called(programmingLanguageName)
+// GetCodeExamplesByProgrammingLanguageName provides a mock function with given fields: userID, programmingLanguageName
+func (_m *CodeExampleRepository) GetCodeExamplesByProgrammingLanguageName(userID string, programmingLanguageName string) ([]domain.CodeExample, error) {
+	ret := _m.Called(userID, programmingLanguageName)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetCodeExamplesByProgrammingLanguageName")
@@ -71,19 +89,19 @@ func (_m *CodeExampleRepository) GetCodeExamplesByProgrammingLanguageName(progra
 
 	var r0 []domain.CodeExample
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string) ([]domain.CodeExample, error)); ok {
-		return rf(programmingLanguageName)
+	if rf, ok := ret.Get(0).(func(string, string) ([]domain.CodeExample, error)); ok {
+		return rf(userID, programmingLanguageName)
 	}
-	if rf, ok := ret.Get(0).(func(string) []domain.CodeExample); ok {
-		r0 = rf(programmingLanguageName)
+	if rf, ok := ret.Get(0).(func(string, string) []domain.CodeExample); ok {
+		r0 = rf(userID, programmingLanguageName)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]domain.CodeExample)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(programmingLanguageName)
+	if rf, ok := ret.Get(1).(func(string, string) error); ok {
+		r1 = rf(userID, programmingLanguageName)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -109,6 +127,34 @@ func (_m *CodeExampleRepository) GetProgrammingLanguages() []domain.ProgrammingL
 	}
 
 	return r0
+}
+
+// SaveCodeExample provides a mock function with given fields: codeExample
+func (_m *CodeExampleRepository) SaveCodeExample(codeExample domain.CodeExample) (string, error) {
+	ret := _m.Called(codeExample)
+
+	if len(ret) == 0 {
+		panic("no return value specified for SaveCodeExample")
+	}
+
+	var r0 string
+	var r1 error
+	if rf, ok := ret.Get(0).(func(domain.CodeExample) (string, error)); ok {
+		return rf(codeExample)
+	}
+	if rf, ok := ret.Get(0).(func(domain.CodeExample) string); ok {
+		r0 = rf(codeExample)
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	if rf, ok := ret.Get(1).(func(domain.CodeExample) error); ok {
+		r1 = rf(codeExample)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // NewCodeExampleRepository creates a new instance of CodeExampleRepository. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

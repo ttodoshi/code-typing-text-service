@@ -53,6 +53,44 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Create code example",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "code examples"
+                ],
+                "summary": "Create code example",
+                "parameters": [
+                    {
+                        "description": "create code example request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateCodeExampleDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponseDto"
+                        }
+                    }
+                }
             }
         },
         "/texts/code-examples/{uuid}": {
@@ -91,6 +129,39 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "description": "Delete code example",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "code examples"
+                ],
+                "summary": "Delete code example",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Code example UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponseDto"
+                        }
+                    }
+                }
             }
         },
         "/texts/programming-languages": {
@@ -121,6 +192,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.CreateCodeExampleDto": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "programmingLanguageUUID": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.ErrorResponseDto": {
             "type": "object",
             "properties": {

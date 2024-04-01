@@ -1,13 +1,13 @@
 package postgres
 
 import (
+	"code-typing-text-service/internal/core/domain"
+	"code-typing-text-service/internal/core/errors"
+	"code-typing-text-service/internal/core/ports"
+	"code-typing-text-service/pkg/database"
+	"code-typing-text-service/pkg/logging"
 	"fmt"
 	"gorm.io/gorm"
-	"speed-typing-text-service/internal/core/domain"
-	"speed-typing-text-service/internal/core/errors"
-	"speed-typing-text-service/internal/core/ports"
-	"speed-typing-text-service/pkg/database"
-	"speed-typing-text-service/pkg/logging"
 )
 
 type codeExampleRepository struct {
@@ -39,12 +39,12 @@ func (r *codeExampleRepository) GetCodeExampleByUUID(UUID string) (codeExample d
 	return codeExample, nil
 }
 
-func (r *codeExampleRepository) GetCodeExamples() (codeExamples []domain.CodeExample) {
-	r.db.Find(&codeExamples)
+func (r *codeExampleRepository) GetCodeExamples(userID string) (codeExamples []domain.CodeExample) {
+	r.db.Find(&codeExamples, "user_id is null or user_id = ?", userID)
 	return
 }
 
-func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageName(programmingLanguageName string) (codeExamples []domain.CodeExample, err error) {
+func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageName(userID, programmingLanguageName string) (codeExamples []domain.CodeExample, err error) {
 	var programmingLanguage domain.ProgrammingLanguage
 	r.db.First(&programmingLanguage, "name = ?", programmingLanguageName)
 
@@ -54,6 +54,25 @@ func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageName(program
 		}
 	}
 
-	r.db.Find(&codeExamples, "programming_language_uuid = ?", programmingLanguage.UUID)
+	r.db.Where("user_id is null or user_id = ?", userID).Find(&codeExamples, "programming_language_uuid = ?", programmingLanguage.UUID)
 	return codeExamples, nil
+}
+
+func (r *codeExampleRepository) SaveCodeExample(codeExample domain.CodeExample) (string, error) {
+	var programmingLanguage domain.ProgrammingLanguage
+	r.db.First(&programmingLanguage, "uuid = ?", codeExample.ProgrammingLanguageUUID)
+
+	if programmingLanguage.UUID == "" {
+		return "", &errors.NotFoundError{
+			Message: fmt.Sprintf(`programming language not found`),
+		}
+	}
+
+	r.db.Create(&codeExample)
+	return codeExample.UUID, nil
+}
+
+func (r *codeExampleRepository) DeleteCodeExample(UUID string) error {
+	r.db.Delete(&domain.CodeExample{}, "uuid = ?", UUID)
+	return nil
 }

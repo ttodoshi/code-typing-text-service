@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"code-typing-text-service/pkg/logging"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"speed-typing-text-service/pkg/logging"
 )
 
 type Router struct {
@@ -22,6 +22,7 @@ func NewRouter(log logging.Logger, codeExampleHandler *CodeExampleHandler) *Rout
 func (r *Router) InitRoutes(e *gin.Engine) {
 	r.log.Info("initializing error handling middleware")
 	e.Use(ErrorHandlerMiddleware())
+	e.Use(AuthenticationMiddleware())
 
 	r.log.Info("initializing routes")
 
@@ -37,5 +38,8 @@ func (r *Router) InitRoutes(e *gin.Engine) {
 		v1TextsGroup.GET("/programming-languages", r.GetProgrammingLanguages)
 		v1TextsGroup.GET("/code-examples/:uuid", r.GetCodeExampleByUUID)
 		v1TextsGroup.GET("/code-examples", r.GetCodeExamples)
+
+		v1TextsGroup.POST("/code-examples", r.CreateCodeExample)
+		v1TextsGroup.DELETE("/code-examples/:uuid", r.DeleteCodeExample)
 	}
 }

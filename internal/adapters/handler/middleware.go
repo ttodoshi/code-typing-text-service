@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"code-typing-text-service/internal/adapters/dto"
+	"code-typing-text-service/internal/core/errors"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"net/http"
-	"speed-typing-text-service/internal/adapters/dto"
-	"speed-typing-text-service/internal/core/errors"
+	"os"
 	"time"
 )
 
@@ -16,6 +18,12 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 			err := c.Errors.Last()
 			var responseStatus int
 			switch err.Err.(type) {
+			case *errors.BodyMappingError:
+				responseStatus = http.StatusBadRequest
+			case *errors.UnauthorizedError:
+				responseStatus = http.StatusUnauthorized
+			case *errors.NoAccessError:
+				responseStatus = http.StatusForbidden
 			case *errors.NotFoundError:
 				responseStatus = http.StatusNotFound
 			case *errors.MappingError:
@@ -33,5 +41,28 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+	}
+}
+
+func AuthenticationMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tokenString := c.GetHeader("Authorization")
+
+		if tokenString == "" {
+			return
+		}
+		token, err := jwt.Parse(tokenString[7:], func(token *jwt.Token) (interface{}, error) {
+			return []byte(os.Getenv("SECRET_KEY")), nil
+		})
+		if err != nil || !token.Valid {
+			return
+		}
+
+		if claims, ok := token.Claims.(jwt.MapClaims); ok {
+			c.Set("userID", claims["sub"].(string))
+			c.Set("nickname", claims["nickname"].(string))
+		}
+
+		c.Next()
 	}
 }

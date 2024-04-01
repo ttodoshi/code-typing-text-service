@@ -10,6 +10,7 @@ type CodeExample struct {
 	Content                 string `gorm:"not null"`
 	ProgrammingLanguageUUID string `gorm:"not null;index"`
 	ProgrammingLanguage     ProgrammingLanguage
+	UserID                  string `gorm:"null"`
 }
 
 func (e *CodeExample) BeforeCreate(_ *gorm.DB) (err error) {
