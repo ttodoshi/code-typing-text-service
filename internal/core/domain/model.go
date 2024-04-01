@@ -5,16 +5,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type RegularText struct {
-	UUID    string `gorm:"primaryKey"`
-	Content string `gorm:"not null"`
-}
-
-func (t *RegularText) BeforeCreate(_ *gorm.DB) (err error) {
-	t.UUID = uuid.NewString()
-	return
-}
-
 type CodeExample struct {
 	UUID                    string `gorm:"primaryKey"`
 	Content                 string `gorm:"not null"`

@@ -31,36 +31,12 @@ definitions:
       name:
         type: string
     type: object
-  dto.GetRegularTextDto:
-    properties:
-      UUID:
-        type: string
-      content:
-        type: string
-    type: object
 host: localhost:8080
 info:
   contact: {}
   title: Text Generation Service API
   version: "1.0"
 paths:
-  /texts:
-    get:
-      consumes:
-      - application/json
-      description: Get all regular texts
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/dto.GetRegularTextDto'
-            type: array
-      summary: Get regular texts
-      tags:
-      - texts
   /texts/code-examples:
     get:
       consumes:

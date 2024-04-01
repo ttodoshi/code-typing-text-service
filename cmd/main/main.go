@@ -42,14 +42,10 @@ func main() {
 
 func initRouter(log logging.Logger) *handler.Router {
 	codeExampleRepository := postgres.NewCodeExampleRepository(log)
-	regularTextRepository := postgres.NewRegularTextRepository(log)
 	codeExampleService := servises.NewCodeExampleService(codeExampleRepository, log)
-	regularTextService := servises.NewRegularTextService(regularTextRepository, log)
 	return handler.NewRouter(
 		log,
-		handler.NewRegularTextHandler(
-			regularTextService, log,
-		), handler.NewCodeExampleHandler(
+		handler.NewCodeExampleHandler(
 			codeExampleService, log,
 		),
 	)

@@ -15,32 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/texts": {
-            "get": {
-                "description": "Get all regular texts",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "texts"
-                ],
-                "summary": "Get regular texts",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/dto.GetRegularTextDto"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/texts/code-examples": {
             "get": {
                 "description": "Get code examples by programming language name",
@@ -191,17 +165,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.GetRegularTextDto": {
-            "type": "object",
-            "properties": {
-                "UUID": {
-                    "type": "string"
-                },
-                "content": {
                     "type": "string"
                 }
             }

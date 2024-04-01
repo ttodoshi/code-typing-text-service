@@ -9,14 +9,12 @@ import (
 
 type Router struct {
 	log logging.Logger
-	*RegularTextHandler
 	*CodeExampleHandler
 }
 
-func NewRouter(log logging.Logger, regularTextHandler *RegularTextHandler, codeExampleHandler *CodeExampleHandler) *Router {
+func NewRouter(log logging.Logger, codeExampleHandler *CodeExampleHandler) *Router {
 	return &Router{
 		log:                log,
-		RegularTextHandler: regularTextHandler,
 		CodeExampleHandler: codeExampleHandler,
 	}
 }
@@ -36,8 +34,6 @@ func (r *Router) InitRoutes(e *gin.Engine) {
 
 	v1TextsGroup := v1ApiGroup.Group("/texts")
 	{
-		v1TextsGroup.GET("/", r.GetRegularTexts)
-
 		v1TextsGroup.GET("/programming-languages", r.GetProgrammingLanguages)
 		v1TextsGroup.GET("/code-examples/:uuid", r.GetCodeExampleByUUID)
 		v1TextsGroup.GET("/code-examples", r.GetCodeExamples)
