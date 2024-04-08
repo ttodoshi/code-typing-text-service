@@ -1,8 +1,8 @@
-package handler
+package http
 
 import (
-	"code-typing-text-service/internal/adapters/dto"
-	"code-typing-text-service/internal/core/errors"
+	"code-typing-text-service/internal/core/ports/dto"
+	"code-typing-text-service/internal/core/ports/errors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"net/http"

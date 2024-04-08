@@ -1,9 +1,9 @@
 package servises
 
 import (
-	"code-typing-text-service/internal/adapters/dto"
 	"code-typing-text-service/internal/core/domain"
-	"code-typing-text-service/internal/core/errors"
+	"code-typing-text-service/internal/core/ports/dto"
+	"code-typing-text-service/internal/core/ports/errors"
 	"code-typing-text-service/internal/core/ports/mocks"
 	"code-typing-text-service/pkg/logging/nop"
 	"github.com/brianvoe/gofakeit/v6"

@@ -2,7 +2,8 @@ package main
 
 import (
 	_ "code-typing-text-service/docs"
-	"code-typing-text-service/internal/adapters/handler"
+	"code-typing-text-service/internal/adapters/handler/http"
+	"code-typing-text-service/internal/adapters/handler/http/api"
 	"code-typing-text-service/internal/adapters/repository/postgres"
 	"code-typing-text-service/internal/core/servises"
 	"code-typing-text-service/pkg/discovery"
@@ -40,12 +41,12 @@ func main() {
 	log.Fatalf("error while running server due to: %s", r.Run())
 }
 
-func initRouter(log logging.Logger) *handler.Router {
+func initRouter(log logging.Logger) *http.Router {
 	codeExampleRepository := postgres.NewCodeExampleRepository(log)
 	codeExampleService := servises.NewCodeExampleService(codeExampleRepository, log)
-	return handler.NewRouter(
+	return http.NewRouter(
 		log,
-		handler.NewCodeExampleHandler(
+		api.NewCodeExampleHandler(
 			codeExampleService, log,
 		),
 	)

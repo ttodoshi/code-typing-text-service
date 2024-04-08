@@ -1,10 +1,10 @@
-package handler
+package api
 
 import (
 	"bytes"
-	"code-typing-text-service/internal/adapters/dto"
 	"code-typing-text-service/internal/core/domain"
-	"code-typing-text-service/internal/core/errors"
+	"code-typing-text-service/internal/core/ports/dto"
+	"code-typing-text-service/internal/core/ports/errors"
 	"code-typing-text-service/internal/core/ports/mocks"
 	"code-typing-text-service/internal/core/servises"
 	"code-typing-text-service/pkg/logging/nop"

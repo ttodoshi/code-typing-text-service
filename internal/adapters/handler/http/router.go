@@ -1,6 +1,7 @@
-package handler
+package http
 
 import (
+	"code-typing-text-service/internal/adapters/handler/http/api"
 	"code-typing-text-service/pkg/logging"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -9,10 +10,10 @@ import (
 
 type Router struct {
 	log logging.Logger
-	*CodeExampleHandler
+	*api.CodeExampleHandler
 }
 
-func NewRouter(log logging.Logger, codeExampleHandler *CodeExampleHandler) *Router {
+func NewRouter(log logging.Logger, codeExampleHandler *api.CodeExampleHandler) *Router {
 	return &Router{
 		log:                log,
 		CodeExampleHandler: codeExampleHandler,

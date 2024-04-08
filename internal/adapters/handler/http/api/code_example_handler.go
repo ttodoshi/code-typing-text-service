@@ -1,9 +1,9 @@
-package handler
+package api
 
 import (
-	"code-typing-text-service/internal/adapters/dto"
-	"code-typing-text-service/internal/core/errors"
 	"code-typing-text-service/internal/core/ports"
+	"code-typing-text-service/internal/core/ports/dto"
+	"code-typing-text-service/internal/core/ports/errors"
 	"code-typing-text-service/pkg/logging"
 	"github.com/gin-gonic/gin"
 )
