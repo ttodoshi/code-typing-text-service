@@ -20,6 +20,6 @@ type GetCustomCodeExampleDto struct {
 }
 
 type CreateCodeExampleDto struct {
-	Content                 string `json:"content"`
+	Content                 string `json:"content" binding:"required,max=2000"`
 	ProgrammingLanguageUUID string `json:"programmingLanguageUUID"`
 }
