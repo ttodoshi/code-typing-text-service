@@ -4,14 +4,13 @@ import (
 	"bytes"
 	"code-typing-text-service/internal/core/domain"
 	"code-typing-text-service/internal/core/ports/dto"
-	"code-typing-text-service/internal/core/ports/errors"
 	"code-typing-text-service/internal/core/ports/mocks"
 	"code-typing-text-service/internal/core/servises"
 	"code-typing-text-service/pkg/logging/nop"
+	"encoding/json"
 	"fmt"
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/gin-gonic/gin"
-	"github.com/goccy/go-json"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"net/http"
@@ -85,7 +84,7 @@ func TestCodeExampleHandler_GetDefaultCodeExampleByUUID(t *testing.T) {
 			"GetCodeExampleByUUID",
 			mock.AnythingOfType("string"),
 		).
-		Return(domain.CodeExample{}, &errors.NotFoundError{})
+		Return(domain.CodeExample{}, fmt.Errorf(""))
 
 	// service
 	service := servises.NewCodeExampleService(repo, log)
@@ -353,7 +352,7 @@ func TestCodeExampleHandler_GetCodeExamplesByProgrammingLanguageNameUnauthorized
 			mock.AnythingOfType("string"),
 		).Return(
 		nil,
-		&errors.NotFoundError{},
+		fmt.Errorf(""),
 	)
 
 	// service
@@ -464,7 +463,7 @@ func TestCodeExampleHandler_CreateCodeExample(t *testing.T) {
 	repo := new(mocks.CodeExampleRepository)
 
 	repo.
-		On("SaveCodeExample", mock.Anything).
+		On("CreateCodeExample", mock.Anything).
 		Return(gofakeit.UUID(), nil)
 
 	// service
@@ -549,7 +548,7 @@ func TestCodeExampleHandler_DeleteCodeExample(t *testing.T) {
 			mock.AnythingOfType("string"),
 		).Return(
 		domain.CodeExample{},
-		&errors.NotFoundError{},
+		fmt.Errorf(""),
 	)
 
 	// service

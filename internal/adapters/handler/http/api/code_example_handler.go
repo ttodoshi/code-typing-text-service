@@ -3,8 +3,8 @@ package api
 import (
 	"code-typing-text-service/internal/core/ports"
 	"code-typing-text-service/internal/core/ports/dto"
-	"code-typing-text-service/internal/core/ports/errors"
 	"code-typing-text-service/pkg/logging"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -116,17 +116,17 @@ func (h *CodeExampleHandler) CreateCodeExample(c *gin.Context) {
 	userID := c.GetString("userID")
 	var err error
 	if userID == "" {
-		err = c.Error(&errors.UnauthorizedError{
-			Message: "user not authenticated",
-		})
+		err = c.Error(
+			fmt.Errorf("user not authenticated: %w", ports.UnauthorizedError),
+		)
 		return
 	}
 	var createCodeExampleDto dto.CreateCodeExampleDto
 	if err = c.ShouldBindJSON(&createCodeExampleDto); err != nil {
-		err = c.Error(&errors.BodyMappingError{
-			Message: "error in request body",
-		})
 		h.log.Warn("error in request body")
+		err = c.Error(
+			fmt.Errorf("error in request body: %w", ports.BadRequestError),
+		)
 		return
 	}
 
@@ -156,9 +156,9 @@ func (h *CodeExampleHandler) DeleteCodeExample(c *gin.Context) {
 	userID := c.GetString("userID")
 	var err error
 	if userID == "" {
-		err = c.Error(&errors.UnauthorizedError{
-			Message: "user not authenticated",
-		})
+		err = c.Error(
+			fmt.Errorf("user not authenticated: %w", ports.UnauthorizedError),
+		)
 		return
 	}
 

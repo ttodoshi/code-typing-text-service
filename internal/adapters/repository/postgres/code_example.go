@@ -3,7 +3,6 @@ package postgres
 import (
 	"code-typing-text-service/internal/core/domain"
 	"code-typing-text-service/internal/core/ports"
-	"code-typing-text-service/internal/core/ports/errors"
 	"code-typing-text-service/pkg/database"
 	"code-typing-text-service/pkg/logging"
 	"fmt"
@@ -32,9 +31,7 @@ func (r *codeExampleRepository) GetProgrammingLanguages() (programmingLanguages 
 func (r *codeExampleRepository) GetCodeExampleByUUID(UUID string) (codeExample domain.CodeExample, err error) {
 	r.db.Find(&codeExample, "uuid = ?", UUID)
 	if codeExample.UUID == "" {
-		return codeExample, &errors.NotFoundError{
-			Message: fmt.Sprintf("code example by uuid '%s' not found", UUID),
-		}
+		return codeExample, fmt.Errorf("code example by uuid '%s' not found", UUID)
 	}
 	return codeExample, nil
 }
@@ -49,30 +46,25 @@ func (r *codeExampleRepository) GetCodeExamplesByProgrammingLanguageName(userID,
 	r.db.First(&programmingLanguage, "name = ?", programmingLanguageName)
 
 	if programmingLanguage.UUID == "" {
-		return codeExamples, &errors.NotFoundError{
-			Message: fmt.Sprintf(`programming language '%s' not found`, programmingLanguageName),
-		}
+		return codeExamples, fmt.Errorf(`programming language '%s' not found`, programmingLanguageName)
 	}
 
 	r.db.Where("user_id is null or user_id = ?", userID).Find(&codeExamples, "programming_language_uuid = ?", programmingLanguage.UUID)
 	return codeExamples, nil
 }
 
-func (r *codeExampleRepository) SaveCodeExample(codeExample domain.CodeExample) (string, error) {
+func (r *codeExampleRepository) CreateCodeExample(codeExample domain.CodeExample) (string, error) {
 	var programmingLanguage domain.ProgrammingLanguage
 	r.db.First(&programmingLanguage, "uuid = ?", codeExample.ProgrammingLanguageUUID)
 
 	if programmingLanguage.UUID == "" {
-		return "", &errors.NotFoundError{
-			Message: fmt.Sprintf(`programming language not found`),
-		}
+		return "", fmt.Errorf(`programming language not found`)
 	}
 
 	r.db.Create(&codeExample)
 	return codeExample.UUID, nil
 }
 
-func (r *codeExampleRepository) DeleteCodeExample(UUID string) error {
+func (r *codeExampleRepository) DeleteCodeExample(UUID string) {
 	r.db.Delete(&domain.CodeExample{}, "uuid = ?", UUID)
-	return nil
 }

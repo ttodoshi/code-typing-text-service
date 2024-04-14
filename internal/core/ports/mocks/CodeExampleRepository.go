@@ -13,22 +13,37 @@ type CodeExampleRepository struct {
 	mock.Mock
 }
 
-// DeleteCodeExample provides a mock function with given fields: UUID
-func (_m *CodeExampleRepository) DeleteCodeExample(UUID string) error {
-	ret := _m.Called(UUID)
+// CreateCodeExample provides a mock function with given fields: codeExample
+func (_m *CodeExampleRepository) CreateCodeExample(codeExample domain.CodeExample) (string, error) {
+	ret := _m.Called(codeExample)
 
 	if len(ret) == 0 {
-		panic("no return value specified for DeleteCodeExample")
+		panic("no return value specified for CreateCodeExample")
 	}
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(string) error); ok {
-		r0 = rf(UUID)
+	var r0 string
+	var r1 error
+	if rf, ok := ret.Get(0).(func(domain.CodeExample) (string, error)); ok {
+		return rf(codeExample)
+	}
+	if rf, ok := ret.Get(0).(func(domain.CodeExample) string); ok {
+		r0 = rf(codeExample)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(string)
 	}
 
-	return r0
+	if rf, ok := ret.Get(1).(func(domain.CodeExample) error); ok {
+		r1 = rf(codeExample)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// DeleteCodeExample provides a mock function with given fields: UUID
+func (_m *CodeExampleRepository) DeleteCodeExample(UUID string) {
+	_m.Called(UUID)
 }
 
 // GetCodeExampleByUUID provides a mock function with given fields: UUID
@@ -127,34 +142,6 @@ func (_m *CodeExampleRepository) GetProgrammingLanguages() []domain.ProgrammingL
 	}
 
 	return r0
-}
-
-// SaveCodeExample provides a mock function with given fields: codeExample
-func (_m *CodeExampleRepository) SaveCodeExample(codeExample domain.CodeExample) (string, error) {
-	ret := _m.Called(codeExample)
-
-	if len(ret) == 0 {
-		panic("no return value specified for SaveCodeExample")
-	}
-
-	var r0 string
-	var r1 error
-	if rf, ok := ret.Get(0).(func(domain.CodeExample) (string, error)); ok {
-		return rf(codeExample)
-	}
-	if rf, ok := ret.Get(0).(func(domain.CodeExample) string); ok {
-		r0 = rf(codeExample)
-	} else {
-		r0 = ret.Get(0).(string)
-	}
-
-	if rf, ok := ret.Get(1).(func(domain.CodeExample) error); ok {
-		r1 = rf(codeExample)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
 }
 
 // NewCodeExampleRepository creates a new instance of CodeExampleRepository. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

@@ -1,8 +1,9 @@
 package http
 
 import (
+	"code-typing-text-service/internal/core/ports"
 	"code-typing-text-service/internal/core/ports/dto"
-	"code-typing-text-service/internal/core/ports/errors"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"net/http"
@@ -17,18 +18,15 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 		if len(c.Errors) > 0 {
 			err := c.Errors.Last()
 			var responseStatus int
-			switch err.Err.(type) {
-			case *errors.BodyMappingError:
+			if errors.Is(err, ports.BadRequestError) {
 				responseStatus = http.StatusBadRequest
-			case *errors.UnauthorizedError:
+			} else if errors.Is(err, ports.UnauthorizedError) {
 				responseStatus = http.StatusUnauthorized
-			case *errors.NoAccessError:
+			} else if errors.Is(err, ports.ForbiddenError) {
 				responseStatus = http.StatusForbidden
-			case *errors.NotFoundError:
+			} else if errors.Is(err, ports.NotFoundError) {
 				responseStatus = http.StatusNotFound
-			case *errors.MappingError:
-				responseStatus = http.StatusInternalServerError
-			default:
+			} else {
 				responseStatus = http.StatusInternalServerError
 			}
 			c.JSON(responseStatus, dto.ErrorResponseDto{

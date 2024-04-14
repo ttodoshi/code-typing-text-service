@@ -3,9 +3,9 @@ package servises
 import (
 	"code-typing-text-service/internal/core/domain"
 	"code-typing-text-service/internal/core/ports/dto"
-	"code-typing-text-service/internal/core/ports/errors"
 	"code-typing-text-service/internal/core/ports/mocks"
 	"code-typing-text-service/pkg/logging/nop"
+	"fmt"
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/jinzhu/copier"
 	"github.com/stretchr/testify/assert"
@@ -79,7 +79,7 @@ func TestGetDefaultCodeExampleByUUID(t *testing.T) {
 			mock.AnythingOfType("string"),
 		).Return(
 		domain.CodeExample{},
-		&errors.NotFoundError{},
+		fmt.Errorf(""),
 	)
 
 	// service
@@ -300,7 +300,7 @@ func TestGetCodeExamplesByProgrammingLanguageNameUnauthorized(t *testing.T) {
 			mock.AnythingOfType("string"),
 		).Return(
 		nil,
-		&errors.NotFoundError{},
+		fmt.Errorf(""),
 	)
 
 	// service
@@ -394,7 +394,7 @@ func TestCreateCodeExample(t *testing.T) {
 	repo := new(mocks.CodeExampleRepository)
 
 	repo.
-		On("SaveCodeExample", mock.Anything).
+		On("CreateCodeExample", mock.Anything).
 		Return(gofakeit.UUID(), nil)
 
 	// service
@@ -459,7 +459,7 @@ func TestDeleteCodeExample(t *testing.T) {
 			mock.AnythingOfType("string"),
 		).Return(
 		domain.CodeExample{},
-		&errors.NotFoundError{},
+		fmt.Errorf(""),
 	)
 
 	// service

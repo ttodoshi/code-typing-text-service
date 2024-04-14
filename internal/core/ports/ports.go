@@ -20,6 +20,6 @@ type CodeExampleRepository interface {
 	GetCodeExampleByUUID(UUID string) (domain.CodeExample, error)
 	GetCodeExamples(userID string) []domain.CodeExample
 	GetCodeExamplesByProgrammingLanguageName(userID, programmingLanguageName string) ([]domain.CodeExample, error)
-	SaveCodeExample(codeExample domain.CodeExample) (string, error)
-	DeleteCodeExample(UUID string) error
+	CreateCodeExample(codeExample domain.CodeExample) (string, error)
+	DeleteCodeExample(UUID string)
 }
