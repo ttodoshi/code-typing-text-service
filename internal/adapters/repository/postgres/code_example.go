@@ -1,11 +1,11 @@
 package postgres
 
 import (
-	"code-typing-text-service/internal/core/domain"
-	"code-typing-text-service/internal/core/ports"
-	"code-typing-text-service/pkg/database"
-	"code-typing-text-service/pkg/logging"
 	"fmt"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/domain"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports"
+	"github.com/ttodoshi/code-typing-text-service/pkg/database"
+	"github.com/ttodoshi/code-typing-text-service/pkg/logging"
 	"gorm.io/gorm"
 )
 

@@ -1,11 +1,11 @@
 package http
 
 import (
-	"code-typing-text-service/internal/core/ports"
-	"code-typing-text-service/internal/core/ports/dto"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports/dto"
 	"net/http"
 	"os"
 	"time"

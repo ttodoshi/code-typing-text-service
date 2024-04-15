@@ -1,11 +1,11 @@
 package http
 
 import (
-	"code-typing-text-service/internal/adapters/handler/http/api"
-	"code-typing-text-service/pkg/logging"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/ttodoshi/code-typing-text-service/internal/adapters/handler/http/api"
+	"github.com/ttodoshi/code-typing-text-service/pkg/logging"
 )
 
 type Router struct {

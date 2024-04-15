@@ -1,11 +1,11 @@
 package api
 
 import (
-	"code-typing-text-service/internal/core/ports"
-	"code-typing-text-service/internal/core/ports/dto"
-	"code-typing-text-service/pkg/logging"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports/dto"
+	"github.com/ttodoshi/code-typing-text-service/pkg/logging"
 )
 
 type CodeExampleHandler struct {

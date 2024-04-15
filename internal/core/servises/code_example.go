@@ -1,12 +1,12 @@
 package servises
 
 import (
-	"code-typing-text-service/internal/core/domain"
-	"code-typing-text-service/internal/core/ports"
-	"code-typing-text-service/internal/core/ports/dto"
-	"code-typing-text-service/pkg/logging"
 	"fmt"
 	"github.com/jinzhu/copier"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/domain"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports/dto"
+	"github.com/ttodoshi/code-typing-text-service/pkg/logging"
 )
 
 type CodeExampleService struct {

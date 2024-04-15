@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	domain "code-typing-text-service/internal/core/domain"
+	domain "github.com/ttodoshi/code-typing-text-service/internal/core/domain"
 
 	mock "github.com/stretchr/testify/mock"
 )

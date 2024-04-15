@@ -1,16 +1,16 @@
 package servises
 
 import (
-	"code-typing-text-service/internal/core/domain"
-	"code-typing-text-service/internal/core/ports/dto"
-	"code-typing-text-service/internal/core/ports/mocks"
-	"code-typing-text-service/pkg/logging/nop"
 	"fmt"
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/jinzhu/copier"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/domain"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports/dto"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports/mocks"
+	"github.com/ttodoshi/code-typing-text-service/pkg/logging/nop"
 	"testing"
 )
 

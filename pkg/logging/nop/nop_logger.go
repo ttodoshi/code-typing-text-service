@@ -1,7 +1,7 @@
 package nop
 
 import (
-	"code-typing-text-service/pkg/logging"
+	"github.com/ttodoshi/code-typing-text-service/pkg/logging"
 )
 
 var l *NoOperationLogger

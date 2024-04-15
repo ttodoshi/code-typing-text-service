@@ -1,8 +1,8 @@
 package ports
 
 import (
-	"code-typing-text-service/internal/core/domain"
-	"code-typing-text-service/internal/core/ports/dto"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/domain"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/ports/dto"
 )
 
 type CodeExampleService interface {

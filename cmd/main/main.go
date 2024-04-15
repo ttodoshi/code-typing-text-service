@@ -1,15 +1,15 @@
 package main
 
 import (
-	_ "code-typing-text-service/docs"
-	"code-typing-text-service/internal/adapters/handler/http"
-	"code-typing-text-service/internal/adapters/handler/http/api"
-	"code-typing-text-service/internal/adapters/repository/postgres"
-	"code-typing-text-service/internal/core/servises"
-	"code-typing-text-service/pkg/discovery"
-	"code-typing-text-service/pkg/env"
-	"code-typing-text-service/pkg/logging"
 	"github.com/gin-gonic/gin"
+	_ "github.com/ttodoshi/code-typing-text-service/docs"
+	"github.com/ttodoshi/code-typing-text-service/internal/adapters/handler/http"
+	"github.com/ttodoshi/code-typing-text-service/internal/adapters/handler/http/api"
+	"github.com/ttodoshi/code-typing-text-service/internal/adapters/repository/postgres"
+	"github.com/ttodoshi/code-typing-text-service/internal/core/servises"
+	"github.com/ttodoshi/code-typing-text-service/pkg/discovery"
+	"github.com/ttodoshi/code-typing-text-service/pkg/env"
+	"github.com/ttodoshi/code-typing-text-service/pkg/logging"
 	"os"
 )
 

@@ -1,4 +1,4 @@
-module code-typing-text-service
+module github.com/ttodoshi/code-typing-text-service
 
 go 1.21
 
